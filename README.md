@@ -1,5 +1,8 @@
 # GitLab Slack Multiplexer
 
+GitLab.com offers `/gitlab foo/bar issue search test` and private installations have to have one slack command per project.
+As this doesnt scale, this project allows to have the same kind of integration as GitLab.com has with private installations.
+
 ## Getting Started
 
 ### Slack command configuration
