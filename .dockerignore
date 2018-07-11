@@ -1,4 +1,6 @@
-/.dockerignore
-/.git*
-/Dockerfile
-/chart/
+*
+!.git
+!Makefile
+!cmd
+!scripts/pkg-config.sh
+!src
