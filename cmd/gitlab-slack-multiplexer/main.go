@@ -16,6 +16,8 @@ import (
 	"regexp"
 	"sync/atomic"
 	"time"
+
+	"github.com/spangenberg/gitlab-slack-multiplexer/src/version"
 )
 
 type key int
@@ -32,7 +34,8 @@ const (
 var (
 	listenAddr string
 	gitlabURL  string
-	healthy    int32
+
+	healthy int32
 
 	re = regexp.MustCompile(`\A\s*([-\w]+(?:\/[-\w]+){1,})\s*(.*)\z`)
 
@@ -85,9 +88,15 @@ func logging(logger *log.Logger) func(http.Handler) http.Handler {
 }
 
 func main() {
-	flag.StringVar(&listenAddr, "listen-addr", ":8080", "server listen address")
+	var versionFlag bool
+	flag.BoolVar(&versionFlag, "version", false, "show version")
 	flag.StringVar(&gitlabURL, "gitlab-url", os.Getenv("GITLAB_URL"), "GitLab URL")
+	flag.StringVar(&listenAddr, "listen-addr", ":8080", "server listen address")
 	flag.Parse()
+
+	if versionFlag != false {
+		version.PrintAndExit()
+	}
 
 	if gitlabURL == "" {
 		log.Fatal("GitLab URL configuration missing.")
